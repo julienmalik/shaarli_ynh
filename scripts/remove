@@ -24,7 +24,6 @@ final_path=$(ynh_app_setting_get --app=$app --key=final_path)
 #=================================================
 ynh_script_progression --message="Removing app main directory..."
 
-# Remove the app directory securely
 ynh_secure_remove --file="$final_path"
 
 #=================================================
@@ -32,7 +31,6 @@ ynh_secure_remove --file="$final_path"
 #=================================================
 ynh_script_progression --message="Removing NGINX web server configuration..."
 
-# Remove the dedicated NGINX config
 ynh_remove_nginx_config
 
 #=================================================
@@ -40,14 +38,13 @@ ynh_remove_nginx_config
 #=================================================
 ynh_script_progression --message="Removing PHP-FPM configuration..."
 
-# Remove the dedicated PHP-FPM config
 ynh_remove_fpm_config
 
 #=================================================
 # REMOVE LOGROTATE CONFIGURATION
 #=================================================
 ynh_script_progression --message="Removing logrotate configuration..."
-# Remove the app-specific logrotate config
+
 ynh_remove_logrotate
 
 #=================================================
@@ -55,7 +52,6 @@ ynh_remove_logrotate
 #=================================================
 ynh_script_progression --message="Removing Fail2Ban configuration..."
 
-# Remove the dedicated fail2ban config
 ynh_remove_fail2ban_config
 
 #=================================================
@@ -65,7 +61,6 @@ ynh_remove_fail2ban_config
 #=================================================
 ynh_script_progression --message="Removing the dedicated system user..."
 
-# Delete a system user
 ynh_system_user_delete --username=$app
 
 #=================================================

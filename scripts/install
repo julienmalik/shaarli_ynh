@@ -48,8 +48,8 @@ ynh_webpath_register --app=$app --domain=$domain --path_url=$path_url
 #=================================================
 ynh_script_progression --message="Storing installation settings..."
 
-ynh_app_setting_set --app=$app --key=domain    --value=$domain
-ynh_app_setting_set --app=$app --key=path      --value=$path_url
+ynh_app_setting_set --app=$app --key=domain --value=$domain
+ynh_app_setting_set --app=$app --key=path --value=$path_url
 ynh_app_setting_set --app=$app --key=is_public --value=$is_public
 
 #=================================================
@@ -66,7 +66,6 @@ ynh_setup_source --dest_dir="$final_path"
 #=================================================
 ynh_script_progression --message="Configuring NGINX web server..."
 
-# Create a dedicated NGINX config
 ynh_add_nginx_config
 
 #=================================================
@@ -74,7 +73,6 @@ ynh_add_nginx_config
 #=================================================
 ynh_script_progression --message="Configuring system user..."
 
-# Create a system user
 ynh_system_user_create --username=$app
 
 #=================================================
@@ -125,7 +123,6 @@ ynh_add_config --template="../conf/config.json.php" --destination="$final_path/d
 #=================================================
 # SECURE FILES AND DIRECTORIES
 #=================================================
-# set proper permissions
 ynh_script_progression --message="Securing files and directories..."
 
 chown -R $app: $final_path
@@ -136,8 +133,6 @@ chmod -R g+rwX $final_path/{cache/,data/,pagecache/,tmp/}
 # SETUP FAIL2BAN
 #=================================================
 ynh_script_progression --message="Configuring Fail2Ban..."
-
-# Create a dedicated Fail2Ban config
 
 ynh_add_fail2ban_config --logpath="$final_path/data/log.txt" --failregex="\s-\s<HOST>\s-\sLogin failed for user.*$"
 
